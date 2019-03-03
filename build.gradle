@@ -1,0 +1,43 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+apply plugin: 'eclipse'
+apply plugin: 'findbugs'
+apply plugin: 'war'
+
+checkstyle {
+  toolVersion '8.17'
+  configFile file("config/checkstyle/checkstyle.xml")
+}
+checkstyleMain {
+  source ='src/main/java'
+}
+checkstyleTest {
+  source ='src/test/java'
+}
+
+group = 'groupthree'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  testCompile("junit:junit:4.12")
+}
+
+findbugs{ findbugsTest.enabled=false }
+
+tasks.withType(FindBugs) {
+  reports {
+      xml.enabled = false
+      html.enabled = true
+  }
+}
